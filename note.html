@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="css/note.css" />
+        <title>Adicionar Kabana</title>
+    </head>
+    <body>
+        <header>
+            <p>Aplicativo de notas Kabana</p>
+        </header>
+        <main>
+            <form id="note-form">
+                <div class="text-input">
+                    <label for="note-title">Título</label>
+                    <input type="text" id="note-title" required="1" />
+                </div>
+                <div id="radios">
+                    <span>Prioridade: </span>
+                    <input type="radio" name="priority-radio" id="priority-low" value="low" required="1" />
+                    <label for="priority-low">Baixa</label>
+                    <input type="radio" name="priority-radio" id="priority-medium" value="medium" />
+                    <label for="priority-medium">Média</label>
+                    <input type="radio" name="priority-radio" id="priority-high" value="high" />
+                    <label for="priority-high">Alta</label>
+                </div>
+                <div class="text-input">
+                    <label for="expiration-date">Data de expiração</label>
+                    <input type="text" id="expiration-date" />
+                </div>
+                <div class="full-input">
+                    <label for="note-content">Conteúdo</label>
+                    <br />
+                    <textarea id="note-content"></textarea>
+                </div>
+                <input type="submit" value="Adicionar" />
+            </form>
+            <button class="button" data-href="./index.html">Cancelar</button>
+        </main>
+        <footer>
+            <p>2025 - Empresa do Jorgão Ltda. Nenhum direito reservado</p>
+        </footer>
+        <script src="js/note.js" type="module"></script>
+    </body>
+</html>

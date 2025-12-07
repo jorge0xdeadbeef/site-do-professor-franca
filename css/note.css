@@ -1,0 +1,31 @@
+@import url("style.css");
+form {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+.text-input {
+    width: 100%;
+}
+.full-input {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+.full-input > :last-child {
+    flex: 1;
+}
+.text-input > * {
+    margin: 8px;
+    padding: 8px;
+}
+.text-input > :first-child {
+    border-right: 1px dotted #777777;
+    border-bottom: 1px dotted #777777;
+}
+.text-input > :last-child {
+    width: 75%;
+}
+textarea {
+    resize: none;
+}

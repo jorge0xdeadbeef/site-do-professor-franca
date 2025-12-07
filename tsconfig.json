@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "es2020",
+    "moduleResolution": "bundler",
+    "outDir": "js",
+    "strict": true,
+    "sourceMap": true
+  },
+  "exclude": []
+}

@@ -1,0 +1,14 @@
+@import url("style.css");
+main > table {
+    flex: 1;
+}
+tbody > :first-child {
+    line-height: 1%;
+}
+tbody > :first-child > th {
+    border: 1px dashed #000000;
+}
+
+.selected {
+    border: 1px dotted #ff0000;
+}
