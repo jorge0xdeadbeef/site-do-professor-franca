@@ -1,7 +1,6 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const types_js_1 = require("./types.js");
-const util_js_1 = require("./util.js");
+import { Priority, Status } from "./types.js";
+import { createElement, getNotes, priorityToPtBr, setupButtons, statusToPtBr } from "./util.js";
 const removeSelected = document.getElementById("remove-selected-button");
 let checks = new Map();
 const noteContainer = document.getElementById("notes-table");
@@ -9,20 +8,20 @@ function reloadContainer(notes) {
     while (noteContainer.children.length > 0)
         noteContainer.children[0].remove();
     if (notes.length == 0) {
-        noteContainer.append((0, util_js_1.createElement)("tr", {}, (0, util_js_1.createElement)("td", { colSpan: 5 }, (0, util_js_1.createElement)("p", { style: { fontSize: "36px", textAlign: "center" } }, (0, util_js_1.createElement)("span", { textContent: "Adicione uma " }), (0, util_js_1.createElement)("a", { href: "./note.html", textContent: "nota" }), (0, util_js_1.createElement)("span", { textContent: "." })))));
+        noteContainer.append(createElement("tr", {}, createElement("td", { colSpan: 5 }, createElement("p", { style: { fontSize: "36px", textAlign: "center" } }, createElement("span", { textContent: "Adicione uma " }), createElement("a", { href: "./note.html", textContent: "nota" }), createElement("span", { textContent: "." })))));
     }
     else {
         function getPriorityColor(priority) {
             switch (priority) {
-                case types_js_1.Priority.low:
+                case Priority.low:
                     return "#007700";
-                case types_js_1.Priority.medium:
+                case Priority.medium:
                     return "#ffff00";
-                case types_js_1.Priority.high:
+                case Priority.high:
                     return "#ff0000";
             }
         }
-        noteContainer.append((0, util_js_1.createElement)("tr", {}, (0, util_js_1.createElement)("th", { textContent: "Título" }), (0, util_js_1.createElement)("th", { textContent: "Status" }), (0, util_js_1.createElement)("th", { textContent: "Prioridade" }), (0, util_js_1.createElement)("th", { textContent: "Data de expiração" })));
+        noteContainer.append(createElement("tr", {}, createElement("th", { textContent: "Título" }), createElement("th", { textContent: "Status" }), createElement("th", { textContent: "Prioridade" }), createElement("th", { textContent: "Data de expiração" })));
         for (let note of notes) {
             let priorityColor, color;
             if (note.isExpired())
@@ -32,8 +31,8 @@ function reloadContainer(notes) {
                 priorityColor = getPriorityColor(note.priority);
             }
             const id = note.id.toString();
-            const nextStatus = types_js_1.Status.nextStatus(note.status);
-            const tr = (0, util_js_1.createElement)("tr", {
+            const nextStatus = Status.nextStatus(note.status);
+            const tr = createElement("tr", {
                 id: id, onclick: _ => {
                     if (checks.get(id) === undefined) {
                         checks.set(id, tr);
@@ -45,27 +44,27 @@ function reloadContainer(notes) {
                     }
                     removeSelected.disabled = checks.size == 0;
                 }
-            }, (0, util_js_1.createElement)("td", { style: { backgroundColor: color } }, (0, util_js_1.createElement)("a", { href: `./note.html?id=${note.id}`, textContent: note.title })), (0, util_js_1.createElement)("td", { style: { backgroundColor: color } }, (0, util_js_1.createElement)("p", {
+            }, createElement("td", { style: { backgroundColor: color } }, createElement("a", { href: `./note.html?id=${note.id}`, textContent: note.title })), createElement("td", { style: { backgroundColor: color } }, createElement("p", {
                 style: {
                     marginBottom: "4px",
                     marginLeft: "0px",
                     marginRight: "0px",
                     marginTop: "0px"
                 },
-                textContent: (0, util_js_1.statusToPtBr)(note.status)
-            }), (0, util_js_1.createElement)("button", note.status === nextStatus ?
+                textContent: statusToPtBr(note.status)
+            }), createElement("button", note.status === nextStatus ?
                 { disabled: true, textContent: "Yay!" } :
-                { textContent: `Marcar como '${(0, util_js_1.statusToPtBr)(nextStatus)}'`, onclick: _ => {
+                { textContent: `Marcar como '${statusToPtBr(nextStatus)}'`, onclick: _ => {
                         note.status = nextStatus;
                         window.localStorage.setItem("notes", JSON.stringify(loadedNotes));
                         reloadContainer(notes);
-                    } })), (0, util_js_1.createElement)("td", { style: { backgroundColor: priorityColor }, textContent: (0, util_js_1.priorityToPtBr)(note.priority) }), (0, util_js_1.createElement)("td", { style: { backgroundColor: color }, textContent: new Date(note.expirationDate).toLocaleString() }));
+                    } })), createElement("td", { style: { backgroundColor: priorityColor }, textContent: priorityToPtBr(note.priority) }), createElement("td", { style: { backgroundColor: color }, textContent: new Date(note.expirationDate).toLocaleString() }));
             noteContainer.append(tr);
         }
     }
 }
-(0, util_js_1.setupButtons)();
-let loadedNotes = (0, util_js_1.getNotes)();
+setupButtons();
+let loadedNotes = getNotes();
 reloadContainer(loadedNotes);
 removeSelected.onclick = _ => {
     // loadedNotes tem a mesma shape na DOM
@@ -85,5 +84,6 @@ removeSelected.onclick = _ => {
 };
 window.onstorage = event => {
     if (event.key == "notes")
-        reloadContainer(loadedNotes = (0, util_js_1.getNotes)());
+        reloadContainer(loadedNotes = getNotes());
 };
+//# sourceMappingURL=index.js.map
